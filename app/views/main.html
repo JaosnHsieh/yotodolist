@@ -1,41 +1,49 @@
-<div class="container">
+<div class="container" ng-controller="MainCtrl">
+   <h2>My todos</h2>
+     
+<div class="btn-group" role="group" aria-label="">
+ <button ng-class="isCopy ? 'btn btn-info' : 'btn btn-success'" ng-click="copy()" aria-label="Copy all todo">{{copyMessage}}</button>
+    <button ng-show=isCopySelected class="btn btn-warning" ng-click="copySelect()" aria-label="Copy all todo">{{copySelectMessage}}</button>
+</div>
+    
 
-<form role="form" ng-submit="addTodo()">
-  <div class="row">
-    <div class="input-group">
-        <input type="text" ng-model="todo" placeholder="What needs to be done?"
-        class="form-control">
+  
+
+
+
+  <!-- Todos input -->
+  <form role="form" ng-submit="addTodo()">
+    <div class="row">
+      <div class="input-group">
+        <input type="text" ng-model="todo" placeholder="What needs to be done?" class="form-control">
         <span class="input-group-btn">
           <input type="submit" class="btn btn-primary" value="Add">
-          </span>
-
-
+            <button ng-class="isSplitterShow?'btn btn-danger':'btn btn-info'" ng-click="splitter()" aria-label="Splitter">Add Multiple</button>
+        </span>
+      </div>
     </div>
-  </div>
-</form>
-
-
-
-  <h2>My todos</h2>
-  <button class="btn btn-info" ng-click="copy()" aria-label="Copy all todo">Copy All</button>
-  <button ng-class="isSplitterShow?'btn btn-danger':'btn btn-info'" ng-click="splitter()" aria-label="Splitter">Add by line break</button>
-<div ng-show=isSplitterShow class="form-group">
+  </form>
+    
+    <div ng-show=isSelect class="form-group">
+  <textarea id="selectTextarea"  class="form-control" placeholder=""></textarea>
+</div>
+    
+    <div ng-show=isSplitterShow class="form-group">
   <textarea id="splitter"  class="form-control" placeholder="Type mutiple line content"></textarea>
   <span class="form-group-btn">
-    <button class="btn btn-primary" ng-click="splitterSave()" aria-label="Remove">Split and Save</button>
+    <button class="btn btn-primary" ng-click="splitterSave()" aria-label="Remove">Save Multiple</button>
   </span>
-
-
 </div>
-  <div ui-sortable ng-model="todos">
-  <p class="input-group" ng-repeat="todo in todos track by $index" style="padding:5px 10px; cursor:move;">
+    
 
+   <!-- Todos list -->
+<div ui-sortable ng-model="todos">
+  <p class="input-group" ng-repeat="todo in todos track by $index" style="padding:5px 10px; cursor: move;">
     <input type="text" ng-model="todo" class="form-control">
     <span class="input-group-btn">
       <button class="btn btn-danger" ng-click="removeTodo($index)" aria-label="Remove">X</button>
+        <button class="btn btn-success" ng-click="select($index)" aria-label="Copy">Select</button>
     </span>
   </p>
-
 </div>
-
 </div>
